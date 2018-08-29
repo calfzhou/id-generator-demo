@@ -257,20 +257,13 @@ def get_generators() -> typing.Dict[str, IdGenerator]:
             DateTimeField(
                 'time', 24, precision=DateTimeField.Precision.MINUTE,
                 base=datetime.datetime(2018, 1, 1)),
-            SequenceField('sequence', 20, start=(0, 10000), step=(1, 10),
+            SequenceField('sequence', 18, start=(0, 20000), step=(1, 100),
                           keys=['time'], cache_name='order-m')
         ]
     )
     generators[generator.name] = generator
 
     return generators
-
-
-def parse_variable_definition(text):
-    parts = text.split('=', 1)
-    if len(parts) < 2:
-        raise argparse.ArgumentTypeError(f'unrecognized variable definition "{text}"')
-    return tuple(parts)
 
 
 def generate_main(generator: IdGenerator, args):
